@@ -3,6 +3,7 @@ package creativelab.coinchart.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import creativelab.coinchart.dto.Crypto;
 import creativelab.coinchart.service.Service;
 import org.slf4j.Logger;
@@ -19,38 +20,23 @@ import java.util.List;
 public class MainController {
 
     private final Service service;
-    private final Gson gson;
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    public MainController(Service service, Gson gson) {
+    public MainController(Service service) {
         this.service = service;
-        this.gson = gson;
     }
 
     @GetMapping("/")
-    public String main(Model model) {
+    public String main(){
+        return  "main";
+    }
 
-        ResponseEntity<Object> apiResult = service.getPrice();
+    @GetMapping("/chart")
+    public String chart(Model model) {
 
-        JsonArray crypto = gson.toJsonTree(apiResult.getBody()).getAsJsonArray();
-        System.out.println("crypto ->>" +crypto);
-        System.out.println("1->>" + apiResult.getBody());
-        System.out.println("2->>" + gson.toJsonTree(apiResult.getBody()));
-
-        List<Crypto> cryptoList = new ArrayList<Crypto>();
-        for (JsonElement jsonElement : crypto) {
-            String time = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
-            int Krw = jsonElement.getAsJsonObject().get("trade_price").getAsInt();
-            Crypto coin = new Crypto();
-            coin.setTime(time);
-            coin.setPriceKrw(Krw);
-
-
-            model.addAttribute("cryptoList", cryptoList);
-
-            return "main";
-        }
+        ResponseEntity<Object> apiResult = service.getData();
+        service.setData(apiResult);
 
         return "main";
     }
