@@ -2,6 +2,7 @@ package creativelab.coinchart.dto;
 
 public class Crypto {
 
+    private int order;
     private String time;
 
     private int priceKrw;
@@ -9,6 +10,24 @@ public class Crypto {
     private int priceUsd;
 
     private int priceJpy;
+
+    private String cryptoName;
+
+    public String getCryptoName() {
+        return cryptoName;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public void setCryptoName(String cryptoName) {
+        this.cryptoName = cryptoName;
+    }
 
     public String getTime() {
         return time;
@@ -45,10 +64,12 @@ public class Crypto {
     @Override
     public String toString() {
         return "Crypto{" +
-                "time='" + time + '\'' +
+                "order=" + order +
+                ", time='" + time + '\'' +
                 ", priceKrw=" + priceKrw +
                 ", priceUsd=" + priceUsd +
                 ", priceJpy=" + priceJpy +
+                ", cryptoName='" + cryptoName + '\'' +
                 '}';
     }
 }

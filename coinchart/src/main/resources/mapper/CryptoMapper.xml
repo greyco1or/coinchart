@@ -4,42 +4,95 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="creativelab.coinchart.mapper.Mapper">
     <resultMap id="cryptoMapper" type="Crypto">
-        <id     column="c_time" property="time"/>
+        <id     column="c_order" property="order"/>
+        <result column="c_time" property="time"/>
         <result column="c_krw" property="priceKrw"/>
         <result column="c_usd" property="priceUsd"/>
         <result column="c_jpy" property="priceJpy"/>
+        <result column="c_name" property="cryptoName"/>
     </resultMap>
 
+    <resultMap id="priceMapper" type="CryptoPriceList">
+        <id     column="c_order" property="order"/>
+        <result column="c_time" property="time"/>
+        <result column="btc_krw" property="btcKrw"/>
+        <result column="btc_usd" property="btcUsd"/>
+        <result column="btc_jpy" property="btcJpy"/>
+        <result column="eth_krw" property="ethKrw"/>
+        <result column="eth_usd" property="ethUsd"/>
+        <result column="eth_jpy" property="ethJpy"/>
+        <result column="sol_krw" property="solKrw"/>
+        <result column="sol_usd" property="solUsd"/>
+        <result column="sol_jpy" property="solJpy"/>
+        <result column="bch_krw" property="bchKrw"/>
+        <result column="bch_usd" property="bchUsd"/>
+        <result column="bch_jpy" property="bchJpy"/>
+    </resultMap>
+
+    <!-- 시세 조회 -->
+    <select id="getPrice" resultMap="priceMapper">
+        select
+            b.c_order
+             ,b.c_time
+             ,b.btc_krw
+             ,c.bch_krw
+             ,e.eth_krw
+             ,s.sol_krw
+        from
+            tb_btc as b
+                inner join
+            tb_bch as c
+            on b.c_order = c.c_order
+                inner join
+            tb_eth as e
+            on b.c_order = e.c_order
+                inner join
+            tb_sol as s
+            on b.c_order = s.c_order
+        group by b.c_order;
+    </select>
 
     <!-- 비트코인 시세 DB 저장 -->
     <insert id="btcInfoSave" parameterType="Crypto">
+        <selectKey keyProperty="time" resultType="String" order="BEFORE">
+            SELECT DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i') AS time;
+        </selectKey>
         insert into tb_btc
-            (c_time, c_krw, c_usd, c_jpy)
+            (c_time, btc_krw, btc_usd, btc_jpy, c_name)
         values
-            (#{time}, #{priceKrw}, 0, 0);
+            (#{time}, #{priceKrw}, 0, 0, 'btc');
     </insert>
 
     <!-- 이더리움 시세 DB 저장 -->
     <insert id="ethInfoSave" parameterType="Crypto">
+        <selectKey keyProperty="time" resultType="String" order="BEFORE">
+            SELECT DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i') AS time;
+        </selectKey>
         insert into tb_eth
-            (c_time, c_krw, c_usd, c_jpy)
+            (c_time, eth_krw, eth_usd, eth_jpy, c_name)
         values
-            (#{time}, #{priceKrw}, 0, 0);
+            (#{time}, #{priceKrw}, 0, 0, 'eth');
     </insert>
 
     <!-- 비트코인캐시 시세 DB 저장 -->
     <insert id="bchInfoSave" parameterType="Crypto">
-    insert into tb_bch
-        (c_time, c_krw, c_usd, c_jpy)
-    values
-        (#{time}, #{priceKrw}, 0, 0);
+        <selectKey keyProperty="time" resultType="String" order="BEFORE">
+            SELECT DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i') AS time;
+        </selectKey>
+        insert into tb_bch
+            (c_time, bch_krw, bch_usd, bch_jpy, c_name)
+        values
+            (#{time}, #{priceKrw}, 0, 0, 'bch');
     </insert>
 
     <!-- 솔라나 시세 DB 저장 -->
     <insert id="solInfoSave" parameterType="Crypto">
+        <selectKey keyProperty="time" resultType="String" order="BEFORE">
+            SELECT DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i') AS time;
+        </selectKey>
         insert into tb_sol
-            (c_time, c_krw, c_usd, c_jpy)
+            (c_time, sol_krw, sol_usd, sol_jpy, c_name)
         values
-            (#{time}, #{priceKrw}, 0, 0);
+            (#{time}, #{priceKrw}, 0, 0, 'sol');
     </insert>
 </mapper>

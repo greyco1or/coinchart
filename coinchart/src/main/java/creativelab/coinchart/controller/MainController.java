@@ -1,10 +1,5 @@
 package creativelab.coinchart.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import creativelab.coinchart.dto.Crypto;
 import creativelab.coinchart.service.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 public class MainController {
 
@@ -29,6 +20,10 @@ public class MainController {
 
     @GetMapping("/")
     public String main(){
+
+        log.info("{}", service.getPrice());
+
+
         return  "main";
     }
 
@@ -36,7 +31,7 @@ public class MainController {
     public String chart(Model model) {
 
         ResponseEntity<Object> apiResult = service.getData();
-        service.setData(apiResult);
+        //service.setData(apiResult);
 
         return "main";
     }
