@@ -3,4 +3,43 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="creativelab.coinchart.mapper.Mapper">
+    <resultMap id="cryptoMapper" type="Crypto">
+        <id     column="c_time" property="time"/>
+        <result column="c_krw" property="priceKrw"/>
+        <result column="c_usd" property="priceUsd"/>
+        <result column="c_jpy" property="priceJpy"/>
+    </resultMap>
+
+
+    <!-- 비트코인 시세 DB 저장 -->
+    <insert id="btcInfoSave" parameterType="Crypto">
+        insert into tb_btc
+            (c_time, c_krw, c_usd, c_jpy)
+        values
+            (#{time}, #{priceKrw}, 0, 0);
+    </insert>
+
+    <!-- 이더리움 시세 DB 저장 -->
+    <insert id="ethInfoSave" parameterType="Crypto">
+        insert into tb_eth
+            (c_time, c_krw, c_usd, c_jpy)
+        values
+            (#{time}, #{priceKrw}, 0, 0);
+    </insert>
+
+    <!-- 비트코인캐시 시세 DB 저장 -->
+    <insert id="bchInfoSave" parameterType="Crypto">
+    insert into tb_bch
+        (c_time, c_krw, c_usd, c_jpy)
+    values
+        (#{time}, #{priceKrw}, 0, 0);
+    </insert>
+
+    <!-- 솔라나 시세 DB 저장 -->
+    <insert id="solInfoSave" parameterType="Crypto">
+        insert into tb_sol
+            (c_time, c_krw, c_usd, c_jpy)
+        values
+            (#{time}, #{priceKrw}, 0, 0);
+    </insert>
 </mapper>
