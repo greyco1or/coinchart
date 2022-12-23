@@ -8,9 +8,12 @@ import creativelab.coinchart.mapper.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @org.springframework.stereotype.Service
 public class Service {
@@ -24,7 +27,21 @@ public class Service {
         this.mapper = mapper;
     }
 
-    //크립토 티커에 따라 객체에 담는 메소드
+    //크립토 가격 가져오기
+    public List<Crypto> getPrice(){
+        List<Crypto> cryptoList = mapper.getPrice();
+        log.info("{}", cryptoList);
+        return cryptoList;
+    }
+
+    //30분마다 데이터 저장하기
+    @Scheduled(cron = "0 0/30 * * * *")
+    public void autoData(){
+        log.info("스케줄러 실행");
+        setData(getData());
+    }
+
+    //api 데이터 처리해서 DB에 담기
     public void setData(ResponseEntity<Object> apiResult){
         JsonArray cryptoList = gson.toJsonTree(apiResult.getBody()).getAsJsonArray();
         //System.out.println("1->>" + apiResult.getBody());
@@ -37,37 +54,37 @@ public class Service {
 
             if(ticker.equals("KRW-BTC")) {
                 Crypto bitcoin = new Crypto();
-                String dateKst = jsonElement.getAsJsonObject().get("trade_date_kst").getAsString();
-                String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
+                //String dateKst = jsonElement.getAsJsonObject().get("trade_date_kst").getAsString();
+                //String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
                 int Krw = jsonElement.getAsJsonObject().get("trade_price").getAsInt();
-                bitcoin.setTime(dateKst + timeKst);
+                //bitcoin.setTime(dateKst + timeKst);
                 bitcoin.setPriceKrw(Krw);
                 log.info("{}", bitcoin);
                 mapper.btcInfoSave(bitcoin);
             } else if(ticker.equals("KRW-ETH")){
                 Crypto ethereum = new Crypto();
-                String dateKst = jsonElement.getAsJsonObject().get("trade_date_kst").getAsString();
-                String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
+                //String dateKst = jsonElement.getAsJsonObject().get("trade_date_kst").getAsString();
+                //String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
                 int Krw = jsonElement.getAsJsonObject().get("trade_price").getAsInt();
-                ethereum.setTime(dateKst + timeKst);
+                //ethereum.setTime(dateKst + timeKst);
                 ethereum.setPriceKrw(Krw);
                 log.info("{}", ethereum);
                 mapper.ethInfoSave(ethereum);
             } else if(ticker.equals("KRW-BCH")){
                 Crypto bitcoinCash = new Crypto();
-                String dateKst = jsonElement.getAsJsonObject().get("trade_date_kst").getAsString();
-                String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
+                //String dateKst = jsonElement.getAsJsonObject().get("trade_date_kst").getAsString();
+                //String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
                 int Krw = jsonElement.getAsJsonObject().get("trade_price").getAsInt();
-                bitcoinCash.setTime(dateKst + timeKst);
+                //bitcoinCash.setTime(dateKst + timeKst);
                 bitcoinCash.setPriceKrw(Krw);
                 log.info("{}", bitcoinCash);
                 mapper.bchInfoSave(bitcoinCash);
             } else if(ticker.equals("KRW-SOL")){
                 Crypto solana = new Crypto();
-                String dateKst = jsonElement.getAsJsonObject().get("trade_date_kst").getAsString();
-                String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
+                //String dateKst = jsonElement.getAsJsonObject().get("trade_date_kst").getAsString();
+                //String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
                 int Krw = jsonElement.getAsJsonObject().get("trade_price").getAsInt();
-                solana.setTime(dateKst + timeKst);
+                //solana.setTime(dateKst + timeKst);
                 solana.setPriceKrw(Krw);
                 log.info("{}", solana);
                 mapper.solInfoSave(solana);
