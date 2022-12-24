@@ -7,15 +7,11 @@ public class Crypto {
 
     private int priceKrw;
 
-    private int priceUsd;
+    private double priceUsd;
 
-    private int priceJpy;
+    private double priceJpy;
 
     private String cryptoName;
-
-    public String getCryptoName() {
-        return cryptoName;
-    }
 
     public int getOrder() {
         return order;
@@ -23,10 +19,6 @@ public class Crypto {
 
     public void setOrder(int order) {
         this.order = order;
-    }
-
-    public void setCryptoName(String cryptoName) {
-        this.cryptoName = cryptoName;
     }
 
     public String getTime() {
@@ -45,20 +37,28 @@ public class Crypto {
         this.priceKrw = priceKrw;
     }
 
-    public int getPriceUsd() {
+    public double getPriceUsd() {
         return priceUsd;
     }
 
-    public void setPriceUsd(int priceUsd) {
+    public void setPriceUsd(double priceUsd) {
         this.priceUsd = priceUsd;
     }
 
-    public int getPriceJpy() {
+    public double getPriceJpy() {
         return priceJpy;
     }
 
-    public void setPriceJpy(int priceJpy) {
+    public void setPriceJpy(double priceJpy) {
         this.priceJpy = priceJpy;
+    }
+
+    public String getCryptoName() {
+        return cryptoName;
+    }
+
+    public void setCryptoName(String cryptoName) {
+        this.cryptoName = cryptoName;
     }
 
     @Override

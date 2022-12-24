@@ -4,11 +4,54 @@
     <meta charset="UTF-8">
     <title>CoinChart</title>
 </head>
+<style>
+    select {
+        width: 160px;
+        padding: .8em .5em;
+        border: 1px solid #999;
+        font-family: inherit;
+        border-radius: 0px;
+        text-align: center;
+        font-size: large;
+        float: right;
+        margin-right: 80px;
+        margin-top: 40px;
+    }
+    #currentPrice{
+        float: right;;
+    }
+</style>
 <body>
-<!--
-    <h1 th:text="${bitcoin.time}">hello world</h1>
-    <h1 th:text="${bitcoin.priceKrw}">hello world</h1>
-!-->
+    <section style="text-align: left; margin-top: 40px; margin-left: 30px;">
+        <span th:text="${'1 USD : ' + usd + 'KRW , '}"></span>
+        <span th:text="${jpy} + 'JPY'"></span>
+    </section>
+    <select id="currency">
+        <option value="usd">USD</option>
+        <option value="krw">KRW</option>
+        <option value="jpy">JPY</option>
+    </select>
+    <section></section>
+    <table id="currentPrice">
+        <tbody>
+            <tr>
+                <td>BTC :</td>
+                <td id="btc"></td>
+            </tr>
+            <tr>
+                <td>ETH :</td>
+                <td id="eth"></td>
+            </tr>
+            <tr>
+                <td>BCH :</td>
+                <td id="bch"></td>
+            </tr>
+            <tr>
+                <td>SOL :</td>
+                <td id="sol"></td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
 
@@ -16,30 +59,197 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <canvas id="line-chart" style="max-width: 80%; height: auto;"></canvas>
 <script type="text/javascript">
-    function getChart() {
+    $(function (){
+        $("#currency").on("change", function (e) {
+            let currency = $("#currency option:selected").val();
+            if(currency === "usd"){
+                getUsdChart();
+            } else if (currency === "krw"){
+                getKrwChart();
+            } else if (currency === "jpy"){
+                getJpyChart();
+            }
+        })
+    })
+
+    function getUsdChart() {
         let timeList = [];
-        let btcKrw = [];
-        let ethKrw = [];
-        let bchKrw = [];
-        let solKrw = [];
+        let btcUsd = [];
+        let ethUsd = [];
+        let bchUsd = [];
+        let solUsd = [];
+
+        let request = $.ajax({
+            url: "/chart",
+            method: 'POST',
+            data: {},
+            dataType: "json"
+        });
+
+        request.done(function(data) {
+            console.log(data);
+            for(let i=0; i<data.length; i++){
+                timeList.push(data[i].time);
+                btcUsd.push(data[i].btcUsd);
+                ethUsd.push(data[i].ethUsd);
+                bchUsd.push(data[i].bchUsd);
+                solUsd.push(data[i].solUsd);
+                if(i == data.length -1){
+                    let btcUsd = data[i].btcUsd;
+                    let ethUsd = data[i].ethUsd;
+                    let bchUsd = data[i].bchUsd;
+                    let solUsd = data[i].solUsd;
+                    $('#btc').text(btcUsd);
+                    $('#eth').text(ethUsd);
+                    $('#bch').text(bchUsd);
+                    $('#sol').text(solUsd);
+                }
+            }
+            new Chart(document.getElementById("line-chart"), {
+                type: 'line',
+                data: {
+                    labels: timeList,
+                    datasets: [{
+                        data: btcUsd,
+                        label: "BTC",
+                        borderColor: "#3e95cd",
+                        fill: false
+                    }, {
+                        data: ethUsd,
+                        label: "ETH",
+                        borderColor: "#8e5ea2",
+                        fill: false
+                    }, {
+                        data: bchUsd,
+                        label: "BCH",
+                        borderColor: "#3cba9f",
+                        fill: false
+                    }, {
+                        data: solUsd,
+                        label: "SOL",
+                        borderColor: "#e8c3b9",
+                        fill: false
+                    }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Crypto Chart'
+                    }
+                }
+            });
+        })
+        request.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+        });
+    }
+
+    function getJpyChart() {
+        let timeList = [];
+        let btcJpy = [];
+        let ethJpy = [];
+        let bchJpy = [];
+        let solJpy = [];
 
 
         let request = $.ajax({
             url: "/chart",
             method: 'POST',
             data: {},
-            async: false,
             dataType: "json"
         });
 
         request.done(function(data) {
             console.log(data);
-            for(let price of data){
-                timeList.push(price.time);
-                btcKrw.push(price.btcKrw);
-                ethKrw.push(price.ethKrw);
-                bchKrw.push(price.bchKrw);
-                solKrw.push(price.solKrw);
+            for(let i=0; i<data.length; i++){
+                timeList.push(data[i].time);
+                btcJpy.push(data[i].btcJpy);
+                ethJpy.push(data[i].ethJpy);
+                bchJpy.push(data[i].bchJpy);
+                solJpy.push(data[i].solJpy);
+                if(i == data.length -1){
+                    let btcJpy = data[i].btcJpy;
+                    let ethJpy = data[i].ethJpy;
+                    let bchJpy = data[i].bchJpy;
+                    let solJpy = data[i].solJpy;
+                    $('#btc').text(btcJpy);
+                    $('#eth').text(ethJpy);
+                    $('#bch').text(bchJpy);
+                    $('#sol').text(solJpy);
+                }
+            }
+            new Chart(document.getElementById("line-chart"), {
+                type: 'line',
+                data: {
+                    labels: timeList,
+                    datasets: [{
+                        data: btcJpy,
+                        label: "BTC",
+                        borderColor: "#3e95cd",
+                        fill: false
+                    }, {
+                        data: ethJpy,
+                        label: "ETH",
+                        borderColor: "#8e5ea2",
+                        fill: false
+                    }, {
+                        data: bchJpy,
+                        label: "BCH",
+                        borderColor: "#3cba9f",
+                        fill: false
+                    }, {
+                        data: solJpy,
+                        label: "SOL",
+                        borderColor: "#e8c3b9",
+                        fill: false
+                    }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Crypto Chart'
+                    }
+                }
+            });
+        })
+        request.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+        });
+    }
+    function getKrwChart() {
+        let timeList = [];
+        let btcKrw = [];
+        let ethKrw = [];
+        let bchKrw = [];
+        let solKrw = [];
+
+        let request = $.ajax({
+            url: "/chart",
+            method: 'POST',
+            data: {},
+            dataType: "json"
+        });
+
+        request.done(function(data) {
+            console.log(data);
+            for(let i=0; i<data.length; i++){
+                timeList.push(data[i].time);
+                btcKrw.push(data[i].btcKrw);
+                ethKrw.push(data[i].ethKrw);
+                bchKrw.push(data[i].bchKrw);
+                solKrw.push(data[i].solKrw);
+                if(i == data.length -1){
+                    let btcKrw = data[i].btcKrw;
+                    let ethKrw = data[i].ethKrw;
+                    let bchKrw = data[i].bchKrw;
+                    let solKrw = data[i].solKrw;
+                    $('#btc').text(btcKrw);
+                    $('#eth').text(ethKrw);
+                    $('#bch').text(bchKrw);
+                    $('#sol').text(solKrw);
+                }
             }
             new Chart(document.getElementById("line-chart"), {
                 type: 'line',
@@ -81,7 +291,7 @@
         });
     }
 
-    getChart();
+    getUsdChart();
 
 
 </script>

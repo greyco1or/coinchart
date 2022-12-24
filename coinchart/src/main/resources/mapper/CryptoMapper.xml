@@ -29,15 +29,10 @@
         <result column="bch_jpy" property="bchJpy"/>
     </resultMap>
 
-    <!-- 시세 조회 -->
+    <!-- 전체 시세 조회 -->
     <select id="getPrice" resultMap="priceMapper">
         select
-            b.c_order
-             ,b.c_time
-             ,b.btc_krw
-             ,c.bch_krw
-             ,e.eth_krw
-             ,s.sol_krw
+            *
         from
             tb_btc as b
                 inner join
@@ -60,7 +55,7 @@
         insert into tb_btc
             (c_time, btc_krw, btc_usd, btc_jpy, c_name)
         values
-            (#{time}, #{priceKrw}, 0, 0, 'btc');
+            (#{time}, #{priceKrw}, #{priceUsd}, #{priceJpy}, 'btc');
     </insert>
 
     <!-- 이더리움 시세 DB 저장 -->
@@ -71,7 +66,7 @@
         insert into tb_eth
             (c_time, eth_krw, eth_usd, eth_jpy, c_name)
         values
-            (#{time}, #{priceKrw}, 0, 0, 'eth');
+            (#{time}, #{priceKrw}, #{priceUsd}, #{priceJpy}, 'eth');
     </insert>
 
     <!-- 비트코인캐시 시세 DB 저장 -->
@@ -82,7 +77,7 @@
         insert into tb_bch
             (c_time, bch_krw, bch_usd, bch_jpy, c_name)
         values
-            (#{time}, #{priceKrw}, 0, 0, 'bch');
+            (#{time}, #{priceKrw}, #{priceUsd}, #{priceJpy}, 'bch');
     </insert>
 
     <!-- 솔라나 시세 DB 저장 -->
@@ -93,6 +88,6 @@
         insert into tb_sol
             (c_time, sol_krw, sol_usd, sol_jpy, c_name)
         values
-            (#{time}, #{priceKrw}, 0, 0, 'sol');
+            (#{time}, #{priceKrw}, #{priceUsd}, #{priceJpy}, 'sol');
     </insert>
 </mapper>
