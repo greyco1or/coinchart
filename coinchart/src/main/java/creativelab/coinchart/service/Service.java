@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import creativelab.coinchart.dto.Crypto;
+import creativelab.coinchart.dto.CryptoPriceList;
 import creativelab.coinchart.mapper.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +29,8 @@ public class Service {
     }
 
     //크립토 가격 가져오기
-    public List<Crypto> getPrice(){
-        List<Crypto> cryptoList = mapper.getPrice();
+    public List<CryptoPriceList> getPrice(){
+        List<CryptoPriceList> cryptoList = mapper.getPrice();
         log.info("{}", cryptoList);
         return cryptoList;
     }
