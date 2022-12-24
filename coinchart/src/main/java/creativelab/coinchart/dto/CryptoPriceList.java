@@ -6,20 +6,20 @@ public class CryptoPriceList {
     private String time;
 
     private int btcKrw;
-    private int btcJpy;
-    private int btcUsd;
+    private double btcJpy;
+    private double btcUsd;
 
     private int bchKrw;
-    private int bchJpy;
-    private int bchUsd;
+    private double bchJpy;
+    private double bchUsd;
 
     private int ethKrw;
-    private int ethJpy;
-    private int ethUsd;
+    private double ethJpy;
+    private double ethUsd;
 
     private int solKrw;
-    private int solJpy;
-    private int solUsd;
+    private double solJpy;
+    private double solUsd;
 
     public int getOrder() {
         return order;
@@ -45,19 +45,19 @@ public class CryptoPriceList {
         this.btcKrw = btcKrw;
     }
 
-    public int getBtcJpy() {
+    public double getBtcJpy() {
         return btcJpy;
     }
 
-    public void setBtcJpy(int btcJpy) {
+    public void setBtcJpy(double btcJpy) {
         this.btcJpy = btcJpy;
     }
 
-    public int getBtcUsd() {
+    public double getBtcUsd() {
         return btcUsd;
     }
 
-    public void setBtcUsd(int btcUsd) {
+    public void setBtcUsd(double btcUsd) {
         this.btcUsd = btcUsd;
     }
 
@@ -69,19 +69,19 @@ public class CryptoPriceList {
         this.bchKrw = bchKrw;
     }
 
-    public int getBchJpy() {
+    public double getBchJpy() {
         return bchJpy;
     }
 
-    public void setBchJpy(int bchJpy) {
+    public void setBchJpy(double bchJpy) {
         this.bchJpy = bchJpy;
     }
 
-    public int getBchUsd() {
+    public double getBchUsd() {
         return bchUsd;
     }
 
-    public void setBchUsd(int bchUsd) {
+    public void setBchUsd(double bchUsd) {
         this.bchUsd = bchUsd;
     }
 
@@ -93,19 +93,19 @@ public class CryptoPriceList {
         this.ethKrw = ethKrw;
     }
 
-    public int getEthJpy() {
+    public double getEthJpy() {
         return ethJpy;
     }
 
-    public void setEthJpy(int ethJpy) {
+    public void setEthJpy(double ethJpy) {
         this.ethJpy = ethJpy;
     }
 
-    public int getEthUsd() {
+    public double getEthUsd() {
         return ethUsd;
     }
 
-    public void setEthUsd(int ethUsd) {
+    public void setEthUsd(double ethUsd) {
         this.ethUsd = ethUsd;
     }
 
@@ -117,19 +117,19 @@ public class CryptoPriceList {
         this.solKrw = solKrw;
     }
 
-    public int getSolJpy() {
+    public double getSolJpy() {
         return solJpy;
     }
 
-    public void setSolJpy(int solJpy) {
+    public void setSolJpy(double solJpy) {
         this.solJpy = solJpy;
     }
 
-    public int getSolUsd() {
+    public double getSolUsd() {
         return solUsd;
     }
 
-    public void setSolUsd(int solUsd) {
+    public void setSolUsd(double solUsd) {
         this.solUsd = solUsd;
     }
 
