@@ -17,47 +17,53 @@
         margin-right: 80px;
         margin-top: 40px;
     }
-    #currentPrice{
-        float: right;;
+    #line-chart {
+        width: 80%;
+        height: 70%;
     }
 </style>
 <body>
-    <section style="text-align: left; margin-top: 40px; margin-left: 30px;">
+    <section style="text-align: left; margin-top: 40px; margin-left: 30px;" >
         <span th:text="${'1 USD : ' + usd + 'KRW , '}"></span>
         <span th:text="${jpy} + 'JPY'"></span>
     </section>
-    <select id="currency">
-        <option value="usd">USD</option>
-        <option value="krw">KRW</option>
-        <option value="jpy">JPY</option>
-    </select>
-    <section></section>
-    <table id="currentPrice">
-        <tbody>
-            <tr>
-                <td>BTC :</td>
-                <td id="btc"></td>
-            </tr>
-            <tr>
-                <td>ETH :</td>
-                <td id="eth"></td>
-            </tr>
-            <tr>
-                <td>BCH :</td>
-                <td id="bch"></td>
-            </tr>
-            <tr>
-                <td>SOL :</td>
-                <td id="sol"></td>
-            </tr>
-        </tbody>
-    </table>
+    <section style="display: inline-flex; width: 80%; height: 70%">
+        <canvas id="line-chart"></canvas>
+        <section style="flex-direction: column">
+            <select id="currency" style="display: inline">
+                <option value="usd">USD</option>
+                <option value="krw">KRW</option>
+                <option value="jpy">JPY</option>
+            </select>
+            <div style="padding-top: 30px; padding-bottom: 30px;">&nbsp;</div>
+            <table id="currentPrice" style="display: inline">
+                <tbody>
+                    <tr>
+                        <td>BTC :</td>
+                        <td id="btc"></td>
+                    </tr>
+                    <tr>
+                        <td>ETH :</td>
+                        <td id="eth"></td>
+                    </tr>
+                    <tr>
+                        <td>BCH :</td>
+                        <td id="bch"></td>
+                    </tr>
+                    <tr>
+                        <td>SOL :</td>
+                        <td id="sol"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </section>
 </body>
 </html>
 
 <script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<canvas id="line-chart" style="max-width: 80%; height: auto;"></canvas>
+
 <script type="text/javascript">
     $(function (){
         $("#currency").on("change", function (e) {
@@ -96,9 +102,13 @@
                 solUsd.push(data[i].solUsd);
                 if(i == data.length -1){
                     let btcUsd = data[i].btcUsd;
+                    btcUsd ="$ " + btcUsd.toLocaleString('en-US');
                     let ethUsd = data[i].ethUsd;
+                    ethUsd ="$ " + ethUsd.toLocaleString('en-US');
                     let bchUsd = data[i].bchUsd;
+                    bchUsd ="$ " + bchUsd.toLocaleString('en-US');
                     let solUsd = data[i].solUsd;
+                    solUsd ="$ " + solUsd.toLocaleString('en-US');
                     $('#btc').text(btcUsd);
                     $('#eth').text(ethUsd);
                     $('#bch').text(bchUsd);
@@ -170,9 +180,13 @@
                 solJpy.push(data[i].solJpy);
                 if(i == data.length -1){
                     let btcJpy = data[i].btcJpy;
+                    btcJpy ="¥ " + btcJpy.toLocaleString('ja-JP');
                     let ethJpy = data[i].ethJpy;
+                    ethJpy ="¥ " + ethJpy.toLocaleString('ja-JP');
                     let bchJpy = data[i].bchJpy;
+                    bchJpy ="¥ " + bchJpy.toLocaleString('ja-JP');
                     let solJpy = data[i].solJpy;
+                    solJpy ="¥ " + solJpy.toLocaleString('ja-JP');
                     $('#btc').text(btcJpy);
                     $('#eth').text(ethJpy);
                     $('#bch').text(bchJpy);
@@ -242,9 +256,13 @@
                 solKrw.push(data[i].solKrw);
                 if(i == data.length -1){
                     let btcKrw = data[i].btcKrw;
+                    btcKrw ="₩ " + btcKrw.toLocaleString('ko-KR');
                     let ethKrw = data[i].ethKrw;
+                    ethKrw ="₩ " + ethKrw.toLocaleString('ko-KR');
                     let bchKrw = data[i].bchKrw;
+                    bchKrw ="₩ " + bchKrw.toLocaleString('ko-KR');
                     let solKrw = data[i].solKrw;
+                    solKrw ="₩ " + solKrw.toLocaleString('ko-KR');
                     $('#btc').text(btcKrw);
                     $('#eth').text(ethKrw);
                     $('#bch').text(bchKrw);

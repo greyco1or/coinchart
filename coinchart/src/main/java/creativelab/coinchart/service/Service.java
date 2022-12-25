@@ -102,7 +102,7 @@ public class Service {
                 //String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
                 int btcKrw = jsonElement.getAsJsonObject().get("trade_price").getAsInt();
                 double btcUsd = (double) btcKrw / usd;
-                double btcJpy = (double) btcKrw / jpy;
+                double btcJpy = (double) btcUsd * jpy;
                 //bitcoin.setTime(dateKst + timeKst);
                 bitcoin.setPriceKrw(btcKrw);
                 bitcoin.setPriceUsd(btcUsd);
@@ -115,7 +115,7 @@ public class Service {
                 //String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
                 int ethkrw = jsonElement.getAsJsonObject().get("trade_price").getAsInt();
                 double ethUsd = (double) ethkrw / usd;
-                double ethJpy = (double) ethkrw / jpy;
+                double ethJpy = (double) ethUsd * jpy;
                 //ethereum.setTime(dateKst + timeKst);
                 ethereum.setPriceKrw(ethkrw);
                 ethereum.setPriceUsd(ethUsd);
@@ -128,7 +128,7 @@ public class Service {
                 //String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
                 int bchKrw = jsonElement.getAsJsonObject().get("trade_price").getAsInt();
                 double bchUsd = (double) bchKrw / usd;
-                double bchJpy = (double) bchKrw / jpy;
+                double bchJpy = (double) bchUsd * jpy;
                 //bitcoinCash.setTime(dateKst + timeKst);
                 bitcoinCash.setPriceKrw(bchKrw);
                 bitcoinCash.setPriceUsd(bchUsd);
@@ -141,7 +141,7 @@ public class Service {
                 //String timeKst = jsonElement.getAsJsonObject().get("trade_time_kst").getAsString();
                 int solKrw = jsonElement.getAsJsonObject().get("trade_price").getAsInt();
                 double solUsd = (double) solKrw / usd;
-                double solJpy = (double) solKrw / jpy;
+                double solJpy = (double) solUsd * jpy;
                 //solana.setTime(dateKst + timeKst);
                 solana.setPriceKrw(solKrw);
                 solana.setPriceUsd(solUsd);
